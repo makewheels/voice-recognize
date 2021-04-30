@@ -22,7 +22,7 @@ public class TestAliyun {
         voiceRecognizeService.init(profileAliyun);
 
         String fileUrl = "http://aliyun-nls.oss.aliyuncs.com/asr/fileASR/examples/nls-sample-16k.wav";
-        String callbackUrl = "http://c19758058n.imwork.net:29406/voiceRecognize/callback/aliyun";
+        String callbackUrl = "http://c19758058n.imwork.net/voiceRecognize/callback/aliyun";
         String taskId = voiceRecognizeService.submitRequest(fileUrl, callbackUrl);
         System.out.println(taskId);
         try {

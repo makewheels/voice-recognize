@@ -18,7 +18,7 @@ public class TestTencent {
         VoiceRecognizeServiceTencent voiceRecognizeService = new VoiceRecognizeServiceTencent();
         voiceRecognizeService.init(profileTencent);
         String fileUrl = "http://aliyun-nls.oss.aliyuncs.com/asr/fileASR/examples/nls-sample-16k.wav";
-        String callbackUrl = "http://c19758058n.imwork.net:29406/voiceRecognize/callback/tencent";
+        String callbackUrl = "http://c19758058n.imwork.net/voiceRecognize/callback/tencent";
         String taskId = voiceRecognizeService.submitRequest(fileUrl, callbackUrl);
         System.out.println(taskId);
         try {

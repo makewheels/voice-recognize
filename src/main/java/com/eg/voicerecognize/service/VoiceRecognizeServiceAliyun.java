@@ -57,7 +57,7 @@ public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
         taskObject.put("version", "4.0");  // 新接入请使用4.0版本，已接入（默认2.0）如需维持现状，请注释掉该参数设置。
         if (callbackUrl != null) {
             taskObject.put("enable_callback", true);
-            taskObject.put("version", callbackUrl);
+            taskObject.put("callback_url", callbackUrl);
         }
         String task = taskObject.toJSONString();
         postRequest.putBodyParameter("Task", task);  // 设置以上JSON字符串为Body参数。
