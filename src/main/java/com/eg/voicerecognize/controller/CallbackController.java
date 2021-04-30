@@ -37,9 +37,7 @@ public class CallbackController {
         jsonObject.put("projectid", projectid);
         jsonObject.put("audioUrl", audioUrl);
         jsonObject.put("text", text);
-        System.out.println(resultDetail);
-        List<ResultDetail> resultDetails = JSON.parseArray(resultDetail, ResultDetail.class);
-        jsonObject.put("resultDetail", resultDetails);
+        jsonObject.put("resultDetail", JSON.parseArray(resultDetail, ResultDetail.class));
         jsonObject.put("audioTime", audioTime);
         TencentCallback tencentCallback = JSON.parseObject(jsonObject.toJSONString(), TencentCallback.class);
         System.out.println(JSON.toJSONString(tencentCallback));

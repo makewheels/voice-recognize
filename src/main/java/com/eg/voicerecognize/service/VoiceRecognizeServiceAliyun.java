@@ -17,10 +17,6 @@ public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
     private String domain;
     private String appkey;
     private IAcsClient client;
-    // 状态值
-    public static final String STATUS_SUCCESS = "SUCCESS";
-    private static final String STATUS_RUNNING = "RUNNING";
-    private static final String STATUS_QUEUEING = "QUEUEING";
 
     @Override
     public void init(Profile profile) {

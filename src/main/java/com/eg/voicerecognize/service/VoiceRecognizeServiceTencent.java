@@ -80,12 +80,12 @@ public class VoiceRecognizeServiceTencent implements VoiceRecognizeService {
 
     @Override
     public JSONObject getResult(String taskId) {
-        DescribeTaskStatusRequest req = new DescribeTaskStatusRequest();
-        req.setTaskId(Long.parseLong(taskId));
+        DescribeTaskStatusRequest request = new DescribeTaskStatusRequest();
+        request.setTaskId(Long.parseLong(taskId));
 
         DescribeTaskStatusResponse response = null;
         try {
-            response = client.DescribeTaskStatus(req);
+            response = client.DescribeTaskStatus(request);
         } catch (TencentCloudSDKException e) {
             e.printStackTrace();
         }
