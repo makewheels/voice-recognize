@@ -1,14 +1,16 @@
-package com.eg.voicerecognize;
+package com.eg.voicerecognize.test;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eg.voicerecognize.profile.CloudType;
 import com.eg.voicerecognize.profile.ProfileAliyun;
 import com.eg.voicerecognize.service.VoiceRecognizeServiceAliyun;
 
-public class Test {
+public class TestAliyun {
     public static void main(String[] args) {
         ProfileAliyun profileAliyun = new ProfileAliyun();
         profileAliyun.setCloudType(CloudType.ALIYUN);
-
+        profileAliyun.setAccessKeyId("LTAI5tLHvFdnm6MXsLm9ubWR");
+        profileAliyun.setAccessKeySecret("dP7nFJMKNsJ9vLiwbwj492AXzeRtWe");
 
         profileAliyun.setRegionId("cn-shanghai");
         profileAliyun.setEndpoint("cn-shanghai");

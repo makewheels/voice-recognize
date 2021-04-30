@@ -1,4 +1,4 @@
-package com.eg.voicerecognize;
+package com.eg.voicerecognize.profile;
 
 public enum CloudType {
     ALIYUN("aliyun"),

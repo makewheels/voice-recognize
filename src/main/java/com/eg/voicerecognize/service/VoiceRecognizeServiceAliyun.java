@@ -97,7 +97,6 @@ public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
         getRequest.setSysMethod(MethodType.GET);
 
         getRequest.putQueryParameter("TaskId", taskId);
-        String result;
         CommonResponse getResponse = null;
         try {
             getResponse = client.getCommonResponse(getRequest);
