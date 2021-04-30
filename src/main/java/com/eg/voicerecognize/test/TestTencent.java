@@ -21,8 +21,9 @@ public class TestTencent {
         String callbackUrl = "http://c19758058n.imwork.net/voiceRecognize/callback/tencent";
         String taskId = voiceRecognizeService.submitRequest(fileUrl, callbackUrl);
         System.out.println(taskId);
+
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -31,6 +32,5 @@ public class TestTencent {
         JSONObject data = result.getJSONObject("data");
         JSONObject resultDetail = data.getJSONArray("resultDetail").getJSONObject(0);
         System.out.println(resultDetail.getString("finalSentence"));
-        System.out.println(data.getLong("taskId"));
     }
 }
