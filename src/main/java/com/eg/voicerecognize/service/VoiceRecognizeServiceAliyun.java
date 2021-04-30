@@ -12,32 +12,13 @@ import com.eg.voicerecognize.profile.Profile;
 import com.eg.voicerecognize.profile.ProfileAliyun;
 
 public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
-    // 地域ID，常量，固定值。
-    public static final String REGIONID = "cn-shanghai";
-    public static final String ENDPOINTNAME = "cn-shanghai";
-    public static final String PRODUCT = "nls-filetrans";
-    public static final String DOMAIN = "filetrans.cn-shanghai.aliyuncs.com";
-    public static final String API_VERSION = "2018-08-17";
-    public static final String POST_REQUEST_ACTION = "SubmitTask";
-    public static final String GET_REQUEST_ACTION = "GetTaskResult";
-    // 请求参数
-    public static final String KEY_APP_KEY = "appkey";
-    public static final String KEY_FILE_LINK = "file_link";
-    public static final String KEY_VERSION = "version";
-    public static final String KEY_ENABLE_WORDS = "enable_words";
-    // 响应参数
-    public static final String KEY_TASK = "Task";
-    public static final String KEY_TASK_ID = "TaskId";
-    public static final String KEY_STATUS_TEXT = "StatusText";
-    public static final String KEY_RESULT = "Result";
+    private String domain;
+    private String appkey;
+    private IAcsClient client;
     // 状态值
     public static final String STATUS_SUCCESS = "SUCCESS";
     private static final String STATUS_RUNNING = "RUNNING";
     private static final String STATUS_QUEUEING = "QUEUEING";
-
-    private String domain;
-    private String appkey;
-    private IAcsClient client;
 
     @Override
     public void init(Profile profile) {
@@ -58,10 +39,10 @@ public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
     @Override
     public String submitRequest(String url) {
         CommonRequest postRequest = new CommonRequest();
-        postRequest.setDomain("filetrans.cn-shanghai.aliyuncs.com"); // 设置域名，固定值。
-        postRequest.setVersion("2018-08-17");         // 设置API的版本号，固定值。
-        postRequest.setAction("SubmitTask");          // 设置action，固定值。
-        postRequest.setProduct("nls-filetrans");      // 设置产品名称，固定值。
+        postRequest.setSysDomain(domain);
+        postRequest.setSysVersion("2018-08-17");
+        postRequest.setSysAction("SubmitTask");
+        postRequest.setSysMethod(MethodType.POST);
         // 设置录音文件识别请求参数，以JSON字符串的格式设置到请求Body中。
         JSONObject taskObject = new JSONObject();
         taskObject.put("appkey", appkey);    // 项目的Appkey
@@ -69,7 +50,6 @@ public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
         taskObject.put("version", "4.0");  // 新接入请使用4.0版本，已接入（默认2.0）如需维持现状，请注释掉该参数设置。
         String task = taskObject.toJSONString();
         postRequest.putBodyParameter("Task", task);  // 设置以上JSON字符串为Body参数。
-        postRequest.setMethod(MethodType.POST);      // 设置为POST方式请求。
         String taskId = "";   // 获取录音文件识别请求任务的ID，以供识别结果查询使用。
         CommonResponse postResponse = null;
         try {
@@ -95,6 +75,46 @@ public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
             return null;
         }
         return taskId;
+    }
+
+    @Override
+    public String getResult(String taskId) {
+        CommonRequest getRequest = new CommonRequest();
+        getRequest.setSysDomain(domain);
+        getRequest.setSysVersion("2018-08-17");
+        getRequest.setSysAction("GetTaskResult");
+        getRequest.setSysMethod(MethodType.GET);
+
+        getRequest.putQueryParameter("TaskId", taskId);
+        String result = null;
+        while (true) {
+            try {
+                CommonResponse getResponse = client.getCommonResponse(getRequest);
+                System.err.println("识别查询结果：" + getResponse.getData());
+                if (getResponse.getHttpStatus() != 200) {
+                    break;
+                }
+                JSONObject rootObj = JSONObject.parseObject(getResponse.getData());
+                String statusText = rootObj.getString("StatusText");
+                if (STATUS_RUNNING.equals(statusText) || STATUS_QUEUEING.equals(statusText)) {
+                    // 继续轮询，注意设置轮询时间间隔。
+                    Thread.sleep(2000);
+                } else {
+                    // 状态信息为成功，返回识别结果；状态信息为异常，返回空。
+                    if (STATUS_SUCCESS.equals(statusText)) {
+                        result = rootObj.getString("Result");
+                        // 状态信息为成功，但没有识别结果，则可能是由于文件里全是静音、噪音等导致识别为空。
+                        if (result == null) {
+                            result = "";
+                        }
+                    }
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
 

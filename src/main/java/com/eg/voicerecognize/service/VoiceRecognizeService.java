@@ -8,4 +8,5 @@ public interface VoiceRecognizeService {
 
     void init(Profile profile);
     String submitRequest(String url);
+    String getResult(String taskId);
 }
