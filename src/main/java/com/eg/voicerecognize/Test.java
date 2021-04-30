@@ -1,5 +1,6 @@
 package com.eg.voicerecognize;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eg.voicerecognize.profile.ProfileAliyun;
 import com.eg.voicerecognize.service.VoiceRecognizeServiceAliyun;
 
@@ -19,7 +20,12 @@ public class Test {
         voiceRecognizeService.init(profileAliyun);
         String taskId = voiceRecognizeService.submitRequest("http://aliyun-nls.oss.aliyuncs.com/asr/fileASR/examples/nls-sample-16k.wav");
         System.out.println(taskId);
-        String result = voiceRecognizeService.getResult(taskId);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        JSONObject result = voiceRecognizeService.getResult(taskId);
         System.out.println(result);
 
     }

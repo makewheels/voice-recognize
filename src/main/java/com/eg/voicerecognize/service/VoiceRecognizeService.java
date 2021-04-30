@@ -1,5 +1,6 @@
 package com.eg.voicerecognize.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eg.voicerecognize.profile.Profile;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +8,10 @@ import org.springframework.stereotype.Service;
 public interface VoiceRecognizeService {
 
     void init(Profile profile);
-    String submitRequest(String url);
-    String getResult(String taskId);
+
+    String submitRequest(String fileUrl);
+
+    String submitRequest(String fileUrl, String callbackUrl);
+
+    JSONObject getResult(String taskId);
 }
