@@ -1,23 +1,22 @@
 package com.eg.voicerecognize.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.eg.voicerecognize.bean.aliyun.AliyunCallback;
 import com.eg.voicerecognize.bean.tencent.TencentCallback;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.regex.Pattern;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/voiceRecognize/callback")
 @RestController
 public class CallbackController {
 
-    // 以4开头的状态码是客户端错误。
-    private static final Pattern PATTERN_CLIENT_ERR = Pattern.compile("4105[0-9]*");
-    // 以5开头的状态码是服务端错误。
-    private static final Pattern PATTERN_SERVER_ERR = Pattern.compile("5105[0-9]*");
-
     @PostMapping("aliyun")
-    public void aliyun(@RequestBody AliyunCallback aliyunCallback) {
+    public void aliyun(@RequestBody JSONObject jsonObject) {
+        AliyunCallback aliyunCallback = JSON.parseObject(
+                jsonObject.toJSONString(), AliyunCallback.class);
         System.out.println(JSON.toJSONString(aliyunCallback));
     }
 

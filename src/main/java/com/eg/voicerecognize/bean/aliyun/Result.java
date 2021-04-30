@@ -1,26 +1,15 @@
-/**
- * Copyright 2021 json.cn
- */
 package com.eg.voicerecognize.bean.aliyun;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import lombok.Data;
 
 import java.util.List;
 
-/**
- * Auto-generated: 2021-04-30 19:27:40
- *
- * @author json.cn (i@json.cn)
- * @website http://www.json.cn/java2pojo/
- */
+@Data
 public class Result {
-
-    private List<Sentence> Sentences;
-
-    public void setSentences(List<Sentence> Sentence) {
-        this.Sentences = Sentence;
-    }
-
-    public List<Sentence> getSentences() {
-        return Sentences;
-    }
+    @JSONField(name = "Words")
+    private List<Word> words;
+    @JSONField(name = "Sentences")
+    private List<Sentence> sentences;
 
 }

@@ -55,6 +55,8 @@ public class VoiceRecognizeServiceAliyun implements VoiceRecognizeService {
         taskObject.put("appkey", appkey);    // 项目的Appkey
         taskObject.put("file_link", fileUrl);  // 设置录音文件的链接
         taskObject.put("version", "4.0");  // 新接入请使用4.0版本，已接入（默认2.0）如需维持现状，请注释掉该参数设置。
+        taskObject.put("enable_words", true); // 是否开启返回词信息，默认为false，开启时需要设置version为“4.0”。
+        taskObject.put("enable_inverse_text_normalization", true); // 是否打开ITN，中文数字将转为阿拉伯数字输出，默认值为false，开启时需要设置version为“4.0”。
         if (callbackUrl != null) {
             taskObject.put("enable_callback", true);
             taskObject.put("callback_url", callbackUrl);
