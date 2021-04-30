@@ -73,7 +73,7 @@ public class CallbackController {
     public String tencent(
             @RequestParam int code,
             @RequestParam String message,
-            @RequestParam int requestId,
+            @RequestParam("requestId") long taskId,
             @RequestParam int appid,
             @RequestParam int projectid,
             @RequestParam String audioUrl,
@@ -81,7 +81,8 @@ public class CallbackController {
             @RequestParam String resultDetail,
             @RequestParam double audioTime
     ) {
-
+        System.out.println(taskId);
+        System.out.println(resultDetail);
         return "{\"code\":0,\"message\":\"success\"}";
     }
 

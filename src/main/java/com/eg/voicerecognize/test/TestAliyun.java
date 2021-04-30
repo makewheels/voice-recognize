@@ -20,10 +20,13 @@ public class TestAliyun {
 
         VoiceRecognizeServiceAliyun voiceRecognizeService = new VoiceRecognizeServiceAliyun();
         voiceRecognizeService.init(profileAliyun);
-        String taskId = voiceRecognizeService.submitRequest("http://aliyun-nls.oss.aliyuncs.com/asr/fileASR/examples/nls-sample-16k.wav");
+
+        String fileUrl = "http://aliyun-nls.oss.aliyuncs.com/asr/fileASR/examples/nls-sample-16k.wav";
+        String callbackUrl = "http://c19758058n.imwork.net:29406/voiceRecognize/callback/aliyun";
+        String taskId = voiceRecognizeService.submitRequest(fileUrl, callbackUrl);
         System.out.println(taskId);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
