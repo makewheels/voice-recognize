@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eg.voicerecognize.profile.CloudType;
 import com.eg.voicerecognize.profile.ProfileTencent;
 import com.eg.voicerecognize.service.VoiceRecognizeServiceTencent;
+import com.tencentcloudapi.mongodb.v20180408.models.SpecItem;
 
 public class TestTencent {
     public static void main(String[] args) {
@@ -19,11 +20,15 @@ public class TestTencent {
         String taskId = voiceRecognizeService.submitRequest("http://aliyun-nls.oss.aliyuncs.com/asr/fileASR/examples/nls-sample-16k.wav");
         System.out.println(taskId);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         JSONObject result = voiceRecognizeService.getResult(taskId);
         System.out.println(result);
+        JSONObject data = result.getJSONObject("data");
+        JSONObject resultDetail = data.getJSONArray("resultDetail").getJSONObject(0);
+        System.out.println(resultDetail.getString("finalSentence"));
+        System.out.println(data.getLong("taskId"));
     }
 }

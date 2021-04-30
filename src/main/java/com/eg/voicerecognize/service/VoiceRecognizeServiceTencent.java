@@ -62,6 +62,8 @@ public class VoiceRecognizeServiceTencent implements VoiceRecognizeService {
         request.setResTextFormat(2L);
         request.setSourceType(0L);
         request.setUrl(fileUrl);
+        if (callbackUrl != null)
+            request.setCallbackUrl(callbackUrl);
 
         CreateRecTaskResponse response = null;
         try {
@@ -73,7 +75,7 @@ public class VoiceRecognizeServiceTencent implements VoiceRecognizeService {
             return null;
         String json = CreateRecTaskResponse.toJsonString(response);
         JSONObject jsonObject = JSONObject.parseObject(json);
-        return jsonObject.getObject("Data", JSONObject.class).getLong("TaskId") + "";
+        return jsonObject.getJSONObject("Data").getLong("TaskId") + "";
     }
 
     @Override

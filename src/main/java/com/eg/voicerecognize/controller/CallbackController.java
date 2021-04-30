@@ -1,10 +1,7 @@
 package com.eg.voicerecognize.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +9,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@RequestMapping("/filetrans/callback")
+@RequestMapping("/voiceRecognize/callback")
 @RestController
 public class CallbackController {
 
@@ -21,9 +18,8 @@ public class CallbackController {
     // 以5开头的状态码是服务端错误。
     private static final Pattern PATTERN_SERVER_ERR = Pattern.compile("5105[0-9]*");
 
-    // 必须是post方式
-    @PostMapping(value = "result")
-    public void GetResult(HttpServletRequest request) {
+    @PostMapping("aliyun")
+    public void aliyun(HttpServletRequest request) {
         byte[] buffer = new byte[request.getContentLength()];
         ServletInputStream in;
         try {
@@ -72,4 +68,21 @@ public class CallbackController {
             e.printStackTrace();
         }
     }
+
+    @PostMapping("tencent")
+    public String tencent(
+            @RequestParam int code,
+            @RequestParam String message,
+            @RequestParam int requestId,
+            @RequestParam int appid,
+            @RequestParam int projectid,
+            @RequestParam String audioUrl,
+            @RequestParam String text,
+            @RequestParam String resultDetail,
+            @RequestParam double audioTime
+    ) {
+
+        return "{\"code\":0,\"message\":\"success\"}";
+    }
+
 }
