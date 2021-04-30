@@ -14,5 +14,5 @@ public class ResultDetail {
     private double SpeechSpeed;
     private int WordsNum;
     @JSONField(name = "Words")
-    private List<Word> Word;
+    private List<Word> words;
 }

@@ -8,6 +8,7 @@ import com.eg.voicerecognize.bean.tencent.TencentCallback;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/voiceRecognize/callback")
@@ -30,15 +31,16 @@ public class CallbackController {
             @RequestParam double audioTime) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", code);
-        jsonObject.put("message", code);
+        jsonObject.put("message", message);
         jsonObject.put("taskId", taskId);
         jsonObject.put("appid", appid);
         jsonObject.put("projectid", projectid);
         jsonObject.put("audioUrl", audioUrl);
         jsonObject.put("text", text);
-        jsonObject.put("resultDetail", JSON.parseArray(resultDetail));
-        jsonObject.put("audioTime", audioTime);
         System.out.println(resultDetail);
+        List<ResultDetail> resultDetails = JSON.parseArray(resultDetail, ResultDetail.class);
+        jsonObject.put("resultDetail", resultDetails);
+        jsonObject.put("audioTime", audioTime);
         TencentCallback tencentCallback = JSON.parseObject(jsonObject.toJSONString(), TencentCallback.class);
         System.out.println(JSON.toJSONString(tencentCallback));
         return "{\"code\":0,\"message\":\"success\"}";
