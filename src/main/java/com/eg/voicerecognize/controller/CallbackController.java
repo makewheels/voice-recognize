@@ -7,10 +7,6 @@ import com.eg.voicerecognize.bean.tencent.ResultDetail;
 import com.eg.voicerecognize.bean.tencent.TencentCallback;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
-
 @RequestMapping("/voiceRecognize/callback")
 @RestController
 public class CallbackController {
